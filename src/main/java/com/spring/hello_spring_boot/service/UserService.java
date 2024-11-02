@@ -3,6 +3,8 @@ package com.spring.hello_spring_boot.service;
 import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
 import com.spring.hello_spring_boot.dto.request.UserUpdateRequest;
 import com.spring.hello_spring_boot.entity.User;
+import com.spring.hello_spring_boot.exception.AppException;
+import com.spring.hello_spring_boot.exception.ErrorCode;
 import com.spring.hello_spring_boot.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class UserService {
         User user = new User();
 
         if(userRepository.existsByUsername((request.getUsername()))) {
-            throw new RuntimeException("Username already exists");
+            throw new AppException(ErrorCode.USER_EXISTED);
         }
 
         user.setUsername(request.getUsername());
@@ -36,7 +38,7 @@ public class UserService {
 
     public User getUserById(String id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                             .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
     }
 
     public User updateUser(String id, UserUpdateRequest request) {

@@ -1,5 +1,6 @@
 package com.spring.hello_spring_boot.controller;
 
+import com.spring.hello_spring_boot.dto.request.ApiResponse;
 import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
 import com.spring.hello_spring_boot.dto.request.UserUpdateRequest;
 import com.spring.hello_spring_boot.entity.User;
@@ -17,28 +18,38 @@ public class UserController {
     private UserService userService;
 
     @PostMapping()
-    User createUser(@RequestBody @Valid UserCreationRequest request) {
-        return userService.createUser(request);
+    ApiResponse<User> createUser(@RequestBody @Valid UserCreationRequest request) {
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.createUser(request));
+        return apiResponse;
     }
 
     @GetMapping("/list")
-    List<User> getAllUsers(){
-        return userService.getAllUsers();
+    ApiResponse<List<User>> getAllUsers(){
+        ApiResponse<List<User>> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.getAllUsers());
+        return apiResponse;
     }
 
     @GetMapping("/{userId}")
-    User getUserById(@PathVariable("userId") String userId){
-        return userService.getUserById(userId);
+    ApiResponse<User> getUserById(@PathVariable("userId") String userId){
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.getUserById(userId));
+        return apiResponse;
     }
 
     @PutMapping("/{userId}")
-    User updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
-        return userService.updateUser(userId, request);
+    ApiResponse<User> updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
+        ApiResponse<User> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(userService.updateUser(userId, request));
+        return apiResponse;
     }
 
     @DeleteMapping("/{userId}")
-    String deleteUser(@PathVariable("userId") String userId){
+    ApiResponse deleteUser(@PathVariable("userId") String userId){
         userService.deleteUser(userId);
-        return "User has been deleted";
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setMessage("User has been deleted");
+        return apiResponse;
     }
 }
