@@ -3,6 +3,7 @@ package com.spring.hello_spring_boot.controller;
 import com.spring.hello_spring_boot.dto.request.ApiResponse;
 import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
 import com.spring.hello_spring_boot.dto.request.UserUpdateRequest;
+import com.spring.hello_spring_boot.dto.response.UserResponse;
 import com.spring.hello_spring_boot.entity.User;
 import com.spring.hello_spring_boot.service.UserService;
 import jakarta.validation.Valid;
@@ -32,15 +33,15 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    ApiResponse<User> getUserById(@PathVariable("userId") String userId){
-        ApiResponse<User> apiResponse = new ApiResponse<>();
+    ApiResponse<UserResponse> getUserById(@PathVariable("userId") String userId){
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(userService.getUserById(userId));
         return apiResponse;
     }
 
     @PutMapping("/{userId}")
-    ApiResponse<User> updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
-        ApiResponse<User> apiResponse = new ApiResponse<>();
+    ApiResponse<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
+        ApiResponse<UserResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(userService.updateUser(userId, request));
         return apiResponse;
     }
