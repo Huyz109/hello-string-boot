@@ -27,6 +27,5 @@ public class AuthController {
                                     .isAuthenticated(result)
                                     .build())
                 .build();
-
     }
 }
