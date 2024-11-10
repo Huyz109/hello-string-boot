@@ -13,9 +13,9 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/*").permitAll() // với endpoint  thì sẽ được cho qua
+                        .anyRequest().permitAll() // với mọi endpoint thì sẽ được cho qua
                 )
                 .build();
     }
