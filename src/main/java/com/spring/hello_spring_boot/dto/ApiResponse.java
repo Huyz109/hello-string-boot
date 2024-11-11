@@ -1,4 +1,4 @@
-package com.spring.hello_spring_boot.dto.request;
+package com.spring.hello_spring_boot.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;

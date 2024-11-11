@@ -1,8 +1,11 @@
 package com.spring.hello_spring_boot.controller;
 
-import com.spring.hello_spring_boot.dto.request.ApiResponse;
+import com.nimbusds.jose.JOSEException;
+import com.spring.hello_spring_boot.dto.ApiResponse;
 import com.spring.hello_spring_boot.dto.request.AuthRequest;
+import com.spring.hello_spring_boot.dto.request.IntrospectRequest;
 import com.spring.hello_spring_boot.dto.response.AuthResponse;
+import com.spring.hello_spring_boot.dto.response.IntrospectResponse;
 import com.spring.hello_spring_boot.service.AuthService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("/auth")
@@ -21,11 +26,17 @@ public class AuthController {
 
     @PostMapping("/login")
     ApiResponse<AuthResponse> login(@RequestBody AuthRequest request) {
-        boolean result = authService.authenticate(request);
+        var result = authService.authenticate(request);
         return ApiResponse.<AuthResponse>builder()
-                .result(AuthResponse.builder()
-                                    .isAuthenticated(result)
-                                    .build())
+                .result(result)
+                .build();
+    }
+
+    @PostMapping("/introspect")
+    ApiResponse<IntrospectResponse> verify(@RequestBody IntrospectRequest request) throws JOSEException, ParseException {
+        var result = authService.introspect(request);
+        return ApiResponse.<IntrospectResponse>builder()
+                .result(result)
                 .build();
     }
 }

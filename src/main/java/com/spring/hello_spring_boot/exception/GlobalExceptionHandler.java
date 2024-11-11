@@ -1,6 +1,6 @@
 package com.spring.hello_spring_boot.exception;
 
-import com.spring.hello_spring_boot.dto.request.ApiResponse;
+import com.spring.hello_spring_boot.dto.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

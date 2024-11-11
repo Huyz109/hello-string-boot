@@ -17,3 +17,6 @@ spring:
       # config username password cho spring security
       name:
       password:
+
+jwt:
+  sign-key: "1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij"

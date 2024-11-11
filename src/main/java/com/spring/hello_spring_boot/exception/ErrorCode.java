@@ -6,6 +6,8 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error"),
     USER_EXISTED(1002, "User existed"),
     USER_NOT_EXISTED(1003, "User not existed"),
+    UNAUTHENTICATED(1004, "Unauthenticated"),
+    UNAUTHORIZED(1005, "You do not have permission"),
     ;
     private int code;
     private String message;
