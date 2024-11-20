@@ -1,5 +1,6 @@
 package com.spring.hello_spring_boot.service;
 
+import com.spring.hello_spring_boot.constant.Role;
 import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
 import com.spring.hello_spring_boot.dto.request.UserUpdateRequest;
 import com.spring.hello_spring_boot.dto.response.UserResponse;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -23,6 +25,7 @@ import java.util.List;
 public class UserService {
     UserRepository userRepository;
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request) {
         if(userRepository.existsByUsername((request.getUsername()))) {
@@ -30,8 +33,11 @@ public class UserService {
         }
 
         User user = userMapper.toUser(request);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        HashSet<String> roles = new HashSet<>();
+        roles.add(Role.USER.name());
+        user.setRoles(roles);
 
         return userMapper.toUserResponse(userRepository.save(user));
     }
