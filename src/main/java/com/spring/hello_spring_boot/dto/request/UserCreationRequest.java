@@ -1,5 +1,6 @@
 package com.spring.hello_spring_boot.dto.request;
 
+import com.spring.hello_spring_boot.validator.DoBContraint;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,8 @@ public class UserCreationRequest {
     String password;
     String firstName;
     String lastName;
+
+    @DoBContraint(min = 5)
     LocalDate dob;
 
 }
