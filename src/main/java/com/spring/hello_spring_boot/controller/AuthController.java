@@ -5,6 +5,7 @@ import com.spring.hello_spring_boot.dto.ApiResponse;
 import com.spring.hello_spring_boot.dto.request.AuthRequest;
 import com.spring.hello_spring_boot.dto.request.IntrospectRequest;
 import com.spring.hello_spring_boot.dto.request.LogoutRequest;
+import com.spring.hello_spring_boot.dto.request.RefreshRequest;
 import com.spring.hello_spring_boot.dto.response.AuthResponse;
 import com.spring.hello_spring_boot.dto.response.IntrospectResponse;
 import com.spring.hello_spring_boot.service.AuthService;
@@ -45,6 +46,14 @@ public class AuthController {
     ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws ParseException, JOSEException {
         authService.logout(request);
         return ApiResponse.<Void>builder()
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    ApiResponse<AuthResponse> verify(@RequestBody RefreshRequest request) throws JOSEException, ParseException {
+        var result = authService.refreshToken(request);
+        return ApiResponse.<AuthResponse>builder()
+                .result(result)
                 .build();
     }
 }
