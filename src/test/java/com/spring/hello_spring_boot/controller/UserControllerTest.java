@@ -56,6 +56,7 @@ public class UserControllerTest {
                 .lastName("Doe")
                 .dob(dob)
                 .build();
+
     }
 
     @Test
@@ -77,6 +78,26 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id")
                         .value("cf0600f538b3"))
         ;
+    }
 
+    @Test
+    void createUser_usernameInvalid_fail() throws Exception {
+        // GIVEN
+        request.setUsername("joh");
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        String content = objectMapper.writeValueAsString(request);
+
+        // WHEN, THEN
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/users")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(content))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("code")
+                        .value(1003))
+                .andExpect(MockMvcResultMatchers.jsonPath("message")
+                        .value("Username must be at least 4 characters")
+                );
     }
 }
