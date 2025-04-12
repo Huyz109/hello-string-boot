@@ -1,10 +1,10 @@
 package com.spring.hello_spring_boot.service;
 
-import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
-import com.spring.hello_spring_boot.dto.response.UserResponse;
-import com.spring.hello_spring_boot.entity.User;
-import com.spring.hello_spring_boot.exception.AppException;
-import com.spring.hello_spring_boot.repository.UserRepository;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,11 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyString;
+import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
+import com.spring.hello_spring_boot.dto.response.UserResponse;
+import com.spring.hello_spring_boot.entity.User;
+import com.spring.hello_spring_boot.exception.AppException;
+import com.spring.hello_spring_boot.repository.UserRepository;
 
 @SpringBootTest
 @TestPropertySource("/test.properties")
@@ -76,17 +76,15 @@ public class UserServiceTest {
         // THEN
         Assertions.assertEquals(response.getId(), actualResponse.getId());
         Assertions.assertEquals(response.getUsername(), actualResponse.getUsername());
-
     }
 
     @Test
-    void createUser_userExisted_fail(){
+    void createUser_userExisted_fail() {
         // GIVEN
         Mockito.when(userRepository.existsByUsername(anyString())).thenReturn(true);
 
         // WHEN
-        var exception = assertThrows(AppException.class,
-                () -> userService.createUser(request));
+        var exception = assertThrows(AppException.class, () -> userService.createUser(request));
 
         // THEN
         Assertions.assertEquals(1002, exception.getErrorCode().getCode());

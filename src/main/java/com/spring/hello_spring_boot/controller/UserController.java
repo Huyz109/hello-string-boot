@@ -1,16 +1,18 @@
 package com.spring.hello_spring_boot.controller;
 
+import java.util.List;
+
+import jakarta.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
 import com.spring.hello_spring_boot.dto.ApiResponse;
 import com.spring.hello_spring_boot.dto.request.UserCreationRequest;
 import com.spring.hello_spring_boot.dto.request.UserUpdateRequest;
 import com.spring.hello_spring_boot.dto.response.UserResponse;
 import com.spring.hello_spring_boot.service.UserService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -26,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/list")
-    ApiResponse<List<UserResponse>> getAllUsers(){
+    ApiResponse<List<UserResponse>> getAllUsers() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
 
         return ApiResponse.<List<UserResponse>>builder()
@@ -35,31 +37,30 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    ApiResponse<UserResponse> getUserById(@PathVariable("userId") String userId){
+    ApiResponse<UserResponse> getUserById(@PathVariable("userId") String userId) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getUserById(userId))
                 .build();
     }
 
     @GetMapping("/info")
-    ApiResponse<UserResponse> getMyInfo(){
+    ApiResponse<UserResponse> getMyInfo() {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.getMyInfo())
                 .build();
     }
 
     @PutMapping("/{userId}")
-    ApiResponse<UserResponse> updateUser(@PathVariable("userId") String userId, @RequestBody UserUpdateRequest request){
+    ApiResponse<UserResponse> updateUser(
+            @PathVariable("userId") String userId, @RequestBody UserUpdateRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .result(userService.updateUser(userId, request))
                 .build();
     }
 
     @DeleteMapping("/{userId}")
-    ApiResponse deleteUser(@PathVariable("userId") String userId){
+    ApiResponse deleteUser(@PathVariable("userId") String userId) {
         userService.deleteUser(userId);
-        return ApiResponse.<String>builder()
-                .result("User has been deleted")
-                .build();
+        return ApiResponse.<String>builder().result("User has been deleted").build();
     }
 }

@@ -1,13 +1,15 @@
 package com.spring.hello_spring_boot.repository;
 
-import com.spring.hello_spring_boot.entity.User;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.spring.hello_spring_boot.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     boolean existsByUsername(String username);
+
     Optional<User> findByUsername(String username);
 }

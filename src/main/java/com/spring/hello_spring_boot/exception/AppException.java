@@ -1,6 +1,6 @@
 package com.spring.hello_spring_boot.exception;
 
-public class AppException extends RuntimeException{
+public class AppException extends RuntimeException {
     private ErrorCode errorCode;
 
     public AppException(ErrorCode errorCode) {

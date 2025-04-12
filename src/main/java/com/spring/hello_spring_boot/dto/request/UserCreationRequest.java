@@ -1,11 +1,13 @@
 package com.spring.hello_spring_boot.dto.request;
 
-import com.spring.hello_spring_boot.validator.DoBContraint;
+import java.time.LocalDate;
+
 import jakarta.validation.constraints.Size;
+
+import com.spring.hello_spring_boot.validator.DoBContraint;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -18,10 +20,10 @@ public class UserCreationRequest {
 
     @Size(min = 8, message = "Password must be at least 8 characters")
     String password;
+
     String firstName;
     String lastName;
 
     @DoBContraint(min = 5, message = "INVALID_DOB")
     LocalDate dob;
-
 }

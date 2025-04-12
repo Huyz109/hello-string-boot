@@ -29,6 +29,7 @@ public enum ErrorCode {
         return message;
     }
 
-    public HttpStatusCode getStatusCode() { return statusCode; }
-
+    public HttpStatusCode getStatusCode() {
+        return statusCode;
+    }
 }

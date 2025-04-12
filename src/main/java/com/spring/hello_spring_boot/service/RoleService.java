@@ -1,20 +1,22 @@
 package com.spring.hello_spring_boot.service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.spring.hello_spring_boot.dto.request.RoleRequest;
 import com.spring.hello_spring_boot.dto.response.RoleResponse;
 import com.spring.hello_spring_boot.entity.Role;
 import com.spring.hello_spring_boot.mapper.RoleMapper;
 import com.spring.hello_spring_boot.repository.PermissionRepository;
 import com.spring.hello_spring_boot.repository.RoleRepository;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -36,9 +38,7 @@ public class RoleService {
     }
 
     public List<RoleResponse> getAll() {
-        return roleRepository.findAll().stream()
-                .map(roleMapper::toRoleResponse)
-                .collect(Collectors.toList());
+        return roleRepository.findAll().stream().map(roleMapper::toRoleResponse).collect(Collectors.toList());
     }
 
     public void delete(String role) {

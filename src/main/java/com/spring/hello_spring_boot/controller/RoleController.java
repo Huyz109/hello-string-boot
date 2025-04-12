@@ -1,16 +1,18 @@
 package com.spring.hello_spring_boot.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
 import com.spring.hello_spring_boot.dto.ApiResponse;
 import com.spring.hello_spring_boot.dto.request.RoleRequest;
 import com.spring.hello_spring_boot.dto.response.RoleResponse;
 import com.spring.hello_spring_boot.service.RoleService;
+
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/role")
@@ -36,8 +38,6 @@ public class RoleController {
 
     @DeleteMapping("/{role}")
     ApiResponse<Void> deleteRole(@PathVariable("role") String role) {
-        return ApiResponse.<Void>builder()
-                .build();
+        return ApiResponse.<Void>builder().build();
     }
-
 }
